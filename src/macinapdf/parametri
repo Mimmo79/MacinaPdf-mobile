@@ -1,0 +1,31 @@
+CONNETTIVITA' DB
+--------------------------
+dbUrl   =   jdbc:mysql://lnx023:3306/
+dbUser  =   telefonia
+dbPwd   =   telefonia
+
+jdbc:mysql://lnx023:3306 
+jdbc:mysql://localhost:3306
+
+
+
+OPERAZIONI SU DB
+--------------------------
+dbName              =   telefonia
+tab_linee           =   fisso_linee
+tab_fatture         =   fisso_fatturazioni
+nome_campo_linea    =   NLinea
+
+
+
+FILE DA ELABORARE
+------------------
+nomeFile    =   C:\\Users\\senma\\Desktop\\File Telecom\\TINBS_2018_C10_7X05236423
+_
+C:\\Users\\senma\\Desktop\\File Telecom\\
+C:\\Users\\massi\\Desktop\\File Telecom\\
+
+VARIABILI INTERNE
+------------------
+nRigheArrayData         =   500
+nColonneArrayData       =   25
