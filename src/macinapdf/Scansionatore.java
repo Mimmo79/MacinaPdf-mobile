@@ -120,33 +120,34 @@ public class Scansionatore {
                     if (tipo.equals("M2M")){
                         tipo="M2M";
                         data[n_row][1]=tipo;
-                        //System.out.println(Num+" "+tipo);
+                        System.out.println(Num+" "+tipo);                        
                     } else if (tipo.equals("Intercent")){
                         riga.next();
                         tipo=riga.next();
                         data[n_row][1]=tipo;
-                        //System.out.println(Num+" "+tipo);
+                        System.out.println(Num+" "+tipo);
                     }
                     
                     // dati fattura
                     data[n_row][9] = bim;
                     data[n_row][10] = anno;
-                    data[n_row][11] = nFatt;
-                    
+                    data[n_row][11] = nFatt;               
 
                     
                     n_row++;        //contatore linee array
                     val_FCIVA=0;    //valore somma di tutti i FCIVA relativi ad un numero
                     n_FCIVA=true;   //controllo di FCIVA multipli
 
+                // entro nel dettaglio dopo la parola "importo"
                 } else if (line.contains(id101)){
                     line = in.nextLine();
+                    
                     outputStream.println("id101 "+line);
                     
                     Scanner riga = new Scanner(line);
                     riga.next(); riga.next(); 
                     String Tot_ConAbb = riga.next();
-                    //System.out.println(Tot_ConAbb);
+                    System.out.println(Tot_ConAbb);
                     //data[n_row-1][1]=Tot_ConAbb.replace(".","").replace(",",".");  //il primo elimina i punti, il secondo converte le virgole in punti
 
                     
@@ -202,7 +203,7 @@ public class Scansionatore {
                     data[n_row-1][5]=Tot.replace(".","").replace(",","."); 
                     
                 }
-            
+            //SERVIZI OPZIONALI A BUNDLE
             line = in.nextLine();
                 
             }
