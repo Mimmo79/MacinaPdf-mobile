@@ -22,8 +22,8 @@ public class Scansionatore {
     static String bim,anno,nFatt;
 
     static String id0="Linea";
-    static String id1="tipo";
-    static String id2="TOTALE TRAFFICO";
+    static String id1="Tipo";
+    static String id2="Importo";
     static String id3="TOTALE ALTRI ADDEBITI E ACCREDITI";
     static String id4="F.C.IVA";
     static String id5="TOTALE";
@@ -44,7 +44,7 @@ public class Scansionatore {
     public static String id20="Fattura periodo:";
     static String id100="RIEPILOGO PER UTENZA";
     static String id101="Importo";
-
+    static String id102="SERVIZI OPZIONALI A BUNDLE";
 
     
     static int n_row=1;  // nella prima riga ci sono le intestazioni
@@ -100,6 +100,7 @@ public class Scansionatore {
             // scansiono la parte in cui compaiono i report fattura
             while (in.hasNextLine()) {
               
+                // contiene id0
                 if (line.contains(id0)){
                     outputStream.println(" ");
                     outputStream.println("id0 "+line);
@@ -115,95 +116,95 @@ public class Scansionatore {
                     String Num = riga.next();
                     data[n_row][0]=Num;
                     
-                    //M2M o ric
+                    //M2M - ric - abb
                     String tipo = riga.next();
                     if (tipo.equals("M2M")){
                         tipo="M2M";
                         data[n_row][1]=tipo;
+                        
                         System.out.println(Num+" "+tipo);                        
                     } else if (tipo.equals("Intercent")){
                         riga.next();
                         tipo=riga.next();
                         data[n_row][1]=tipo;
                         System.out.println(Num+" "+tipo);
-                    }
+                    } 
                     
-                    // dati fattura
-                    data[n_row][9] = bim;
-                    data[n_row][10] = anno;
-                    data[n_row][11] = nFatt;               
+                    
+                    
+                    
+                // dati fattura
+                data[n_row][9] = bim;
+                data[n_row][10] = anno;
+                data[n_row][11] = nFatt;               
 
                     
-                    n_row++;        //contatore linee array
-                    val_FCIVA=0;    //valore somma di tutti i FCIVA relativi ad un numero
-                    n_FCIVA=true;   //controllo di FCIVA multipli
+                n_row++;                //contatore linee array
+                line = in.nextLine();   // passo alla riga successiva
 
                 // entro nel dettaglio dopo la parola "importo"
                 } else if (line.contains(id101)){
                     line = in.nextLine();
-                    
                     outputStream.println("id101 "+line);
                     
-                    Scanner riga = new Scanner(line);
-                    riga.next(); riga.next(); 
-                    String Tot_ConAbb = riga.next();
-                    System.out.println(Tot_ConAbb);
-                    //data[n_row-1][1]=Tot_ConAbb.replace(".","").replace(",",".");  //il primo elimina i punti, il secondo converte le virgole in punti
+                    // M2M
+                    if (data[n_row-1][1].equals("M2M")){
+                        Scanner riga = new Scanner(line);
+                        riga.next(); riga.next();
+                        String GB = riga.next();
+                        riga.next(); riga.next(); riga.next();
+                        String Importo = riga.next();
+                        data[n_row-1][2]=GB;
+                        data[n_row-1][3]=Importo;        
+                    
+                        System.out.println("M2M "+GB+" "+Importo);
+                        
+                    // Abb    
+                    } else if (data[n_row-1][1].equals("abb")){
+                        Scanner riga = new Scanner(line);
 
+                        
+                        System.out.println("abb");
+                    // ric    
+                    } else if (data[n_row-1][1].equals("ric")){
+                        Scanner riga = new Scanner(line);
+                        if (riga.next().equals("Intercent")){
+                            riga.next();
+                            String check=riga.next();
+                            if (check.equals("ric")){
+                                riga.next(); riga.next(); riga.next(); riga.next();
+                                String Importo = riga.next();
+                                data[n_row-1][3]=Importo;
+                                System.out.println("Importo "+Importo);
+                            } else {
+                                String GB = check;
+                                riga.next(); riga.next(); riga.next(); riga.next(); riga.next();
+                                String Importo = riga.next();
+                                data[n_row-1][2]=GB;
+                                data[n_row-1][3]=Importo;
+                                System.out.println(GB+" GB "+Importo+" Importo");
+                                
+                            }
+                            
+                        } else if (data[n_row-1][1].equals("Ricariche")){
+                            System.out.println("Ricariche");
+                        }                        
                     
-                } else if (line.contains(id2)){
-                    outputStream.println("id2 "+line);
-                    
-                    Scanner riga = new Scanner(line);
-                    riga.next(); riga.next();
-                    String Tot_Traff = riga.next();
-                    //System.out.println(Tot_Traff);
-                    data[n_row-1][2]=Tot_Traff.replace(".","").replace(",",".");
- 
-                } else if (line.contains(id3)){
-                    outputStream.println("id3 "+line);
-                    
-                    Scanner riga = new Scanner(line);
-                    riga.next(); riga.next(); riga.next(); riga.next(); riga.next();
-                    String Tot_Altri = riga.next();
-                    //System.out.println(Tot_Altri);
-                    data[n_row-1][3]=Tot_Altri.replace(".","").replace(",",".");
-                                     
-                } else if (line.contains(id4)){
-                    outputStream.println("id4 "+line);
-                    
-                    Scanner riga = new Scanner(line);
-                    //rilevo il valore del fuori campo iva
-                    String a = riga.next();
-                    String b = riga.next();
-                    while (!b.equals(id4)){
-                    a=b;
-                    b = riga.next();                    
-                    }
-
-                    data[n_row-1][4]=a.replace(".","").replace(",",".");   // il fuori F.C.IVA occupa i campi dal 12 in su
-                    
-                    // sommo i F.C.IVA multipli
-                    if (n_FCIVA){
-                        val_FCIVA = Float.parseFloat(data[n_row-1][4]);
+                        System.out.println("ric");
+                    // tipo non riconosciuto    
                     } else {
-                        val_FCIVA = val_FCIVA + Float.parseFloat(data[n_row-1][4]);
-                        data[n_row-1][4]=Float.toString(val_FCIVA);
-                        //System.out.println("FCIVA : "+val_FCIVA+" "+importiFatt[n_row-1][5]);
+                        
+                        System.out.println("Errore Scansionatore - tipo non M2M/ric/abb");
+                        
                     }
-                    n_FCIVA=false;
-                    
-                }   else if (line.contains(id5)){
-                    outputStream.println("id5"+line);
-                    
-                    Scanner riga = new Scanner(line);
-                    riga.next();
-                    String Tot = riga.next();
-                    //System.out.println(Tot);
-                    data[n_row-1][5]=Tot.replace(".","").replace(",","."); 
+                } else if (line.contains(id102)){
                     
                 }
-            //SERVIZI OPZIONALI A BUNDLE
+                        
+                        
+                        
+                    
+
             line = in.nextLine();
                 
             }
