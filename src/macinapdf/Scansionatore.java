@@ -24,12 +24,12 @@ public class Scansionatore {
     static String id0="Linea";
     static String id1="Tipo";
     static String id2="GB";
-    static String id3="Importo";
+    static String id3="Importo GB";
     static String id4="QtaRicariche";
-    static String id5="TCG";
-    static String id6="Totale importo";
-    static String id7="";
-    static String id8="";
+    static String id5="Importo Ricariche";
+    static String id6="";
+    static String id7="Totale";
+    static String id8="TCG";
     static String id9="Bimestre";
     static String id10="Anno";
     static String id11="n_fattura";
@@ -49,7 +49,7 @@ public class Scansionatore {
     static String id104="ric";
     static String id105="Intercent";
     static String id106="Ricariche";
-    static String id107="SERVIZI";
+    static String id107="SERVIZI OPZIONALI";
     static String id108="Tassa";
     static String id109="Totale";
     static String id110="traffico";
@@ -60,7 +60,7 @@ public class Scansionatore {
     static boolean n_FCIVA=true;
     static float val_FCIVA=0;
     static String[][] data = new String[Main.nRigheArrayData][Main.nColonneArrayData];
-    static String[][] consumi = new String[Main.nRigheArrayData][Main.nColonneArrayData];
+
     
     /**
     * Questo metodo compila un array "data" estrapolando i dati dalla fattura multipla.
@@ -161,9 +161,16 @@ public class Scansionatore {
                         riga.next(); riga.next(); riga.next();
                         String Importo = riga.next();
                         data[n_row-1][2]=GB;
-                        data[n_row-1][3]=Importo;        
+                        data[n_row-1][3]=Importo;
+                        
+                        line = in.nextLine(); // Totale
+                        riga = new Scanner(line);
+                        riga.next();
+                        data[n_row-1][7]=riga.next();
                     
-                        System.out.println("M2M  GB "+GB+" Importo "+Importo);
+                        System.out.println( " GB -> "+GB+
+                                            " Importo x bundle-> "+Importo+
+                                            " Totale -> "+data[n_row-1][7]);
                         
                     // Abb    
                     } else if (data[n_row-1][1].equals(id103)){
@@ -222,27 +229,43 @@ public class Scansionatore {
                             if (check.equals(id104)){
                                 riga.next(); riga.next(); riga.next(); riga.next();
                                 String Importo = riga.next();
-                                data[n_row-1][3]=Importo;
-                                System.out.println("ric  GB - Importo "+Importo);
+                                //data[n_row-1][3]=Importo;
+                                //System.out.println("ric  GB - Importo "+Importo);
                             } else {
                                 String GB = check;
                                 riga.next(); riga.next(); riga.next(); riga.next(); riga.next();
                                 String Importo = riga.next();
                                 data[n_row-1][2]=GB;
                                 data[n_row-1][3]=Importo;
-                                System.out.println("ric  GB "+GB+" Importo "+Importo);
+                                //System.out.println("ric  GB "+GB+" Importo "+Importo);
                                 
                             }
                         line = in.nextLine();
                         riga = new Scanner(line);
                                                  
                         }
-                        if (riga.next().equals(id106)){ //ricariche
+                        if (riga.equals(id106)){ //ricariche
                             riga.next(); 
                             data[n_row-1][4]=riga.next();   //qta 
-                            data[n_row-1][3]=riga.next();   //importo
-                            System.out.println("ric N ricariche "+data[n_row-1][4]+" Importo "+data[n_row-1][3]);   
+                            data[n_row-1][5]=riga.next();   //importo
+                            //System.out.println("ric N ricariche "+data[n_row-1][4]+" Importo "+data[n_row-1][3]);
+                            
+                            line = in.nextLine();
+                            riga = new Scanner(line);
                         }
+                        System.out.println(riga.next());
+                        if (riga.equals(id109)){ //Totale
+                            data[n_row-1][7]=riga.next();
+                            System.out.println("ciao");
+                            
+                        }
+                        
+                        System.out.println( " GB -> "+data[n_row-1][2]+
+                                            " Importo x bundle -> "+data[n_row-1][3]+
+                                            " ricariche -> "+data[n_row-1][4]+
+                                            " Importo ricariche -> "+data[n_row-1][5]+
+                                            " Totale -> "+data[n_row-1][7]);
+                        
                                               
                     } else {
                         
@@ -250,29 +273,12 @@ public class Scansionatore {
                       
                     }
                 
-                // "SERVIZI OPZIONALI.."  rilevo i consumi dei bundle dati solo per M2M e Abb  
+                // "SERVIZI OPZIONALI.."  salto questa parte perchè contiene solo i consumi dati solo per M2M e Abb  
                 } else if (line.contains(id107)){
                     
-                    Scanner riga = new Scanner(line);
-                    String primo = riga.next();
-                    String secondo = riga.next();
-                    while ( !(primo.equals("I") && secondo.equals("valori"))){
-                    int n=0;
-                        if (secondo.equals(id102) || secondo.equals(id105)){
-                            consumi[n][0]=primo;
-                          
-                            System.out.println("primo "+primo+" secondo "+secondo);
-                            
-                        }
-                    n++;
-                    }
-                
-                    
-                }
-                        
-                        
-                        
-                    
+                    break;
+                   
+                }            
 
             line = in.nextLine();
                 
