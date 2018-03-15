@@ -217,26 +217,41 @@ public class Mysql {
                 System.out.println("Almeno un record di questo bimestre è già stato caricato!!!");
                 return;
             }
-            
-            
+            /*
+    static String id0="Linea";
+    static String id1="Tipo";
+    static String id2="GB";
+    static String id3="Importo GB";
+    static String id4="QtaRicariche";
+    static String id5="Importo Ricariche";
+    static String id6="TCG";
+    static String id7="Totale traffico";
+    static String id8="Totale";
+    static String id9="Bimestre";
+    static String id10="Anno";
+    static String id11="n_fattura";
+            */
             
             query=null;
             rs=null;
             query="INSERT INTO " + Main.dbName + "." + Main.tab_fatture + 
-                " (             NLinea, Bim,    Anno,   Nfattura,   TotaleContributiEAbbonamenti,   TotaleTraffico, FCIva,  TotaleAltriAddebitiEAccrediti,  Totale)" +
-                " VALUES (      ?,      ?,      ?,      ?,          ?,                              ?,              ?,      ?,                              ?)";         
+                " (             NLinea, Tipo,   GB,     ImportoGB,  QtaRicariche,   ImportoRicariche,   TCG,    TotaleTraffico, Totale, Bim,    Anno,   Nfattura)" +
+                " VALUES (      ?,      ?,      ?,      ?,          ?,              ?,                  ?,      ?,              ?,      ?,      ?,      ?)";         
             pst = con.prepareStatement(query);
             
             for (riga=1; riga < (Scansionatore.n_row) ; riga++){
                 pst.setString(1, data[riga][0]);
-                pst.setString(2, data[riga][9]);
-                pst.setString(3, data[riga][10]);
-                pst.setString(4, data[riga][11]);
-                pst.setString(5, data[riga][1]);
-                pst.setString(6, data[riga][2]);
-                pst.setString(7, data[riga][4]);
-                pst.setString(8, data[riga][3]);
-                pst.setString(9, data[riga][5]);
+                pst.setString(2, data[riga][1]);
+                pst.setString(3, data[riga][2]);
+                pst.setString(4, data[riga][3]);
+                pst.setString(5, data[riga][4]);
+                pst.setString(6, data[riga][5]);
+                pst.setString(7, data[riga][6]);
+                pst.setString(8, data[riga][7]);
+                pst.setString(9, data[riga][8]);
+                pst.setString(10, data[riga][9]);
+                pst.setString(11, data[riga][10]);
+                pst.setString(12, data[riga][11]);
      
                 pst.executeUpdate();
                 

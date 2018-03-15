@@ -13,7 +13,7 @@ OPERAZIONI SU DB
 --------------------------
 dbName              =   telefonia
 tab_linee           =   fisso_linee
-tab_fatture         =   fisso_fatturazioni
+tab_fatture         =   mobile_fatturazioni
 nome_campo_linea    =   NLinea
 
 

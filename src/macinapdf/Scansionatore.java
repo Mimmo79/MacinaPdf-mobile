@@ -9,6 +9,7 @@ package macinapdf;
 import java.io.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 /**
  *
@@ -27,9 +28,9 @@ public class Scansionatore {
     static String id3="Importo GB";
     static String id4="QtaRicariche";
     static String id5="Importo Ricariche";
-    static String id6="";
-    static String id7="Totale";
-    static String id8="TCG";
+    static String id6="TCG";
+    static String id7="Totale traffico";
+    static String id8="Totale";
     static String id9="Bimestre";
     static String id10="Anno";
     static String id11="n_fattura";
@@ -51,14 +52,12 @@ public class Scansionatore {
     static String id106="Ricariche";
     static String id107="SERVIZI OPZIONALI";
     static String id108="Tassa";
-    static String id109="Totale";
-    static String id110="traffico";
+    static String id109="Totale traffico";
+    static String id110="Totale";
 
 
     
     static int n_row=1;  // nella prima riga ci sono le intestazioni
-    static boolean n_FCIVA=true;
-    static float val_FCIVA=0;
     static String[][] data = new String[Main.nRigheArrayData][Main.nColonneArrayData];
 
     
@@ -150,7 +149,9 @@ public class Scansionatore {
 
                 // entro nel dettaglio dopo la parola "importo"
                 } else if (line.contains(id101)){
-                         
+                    if (data[n_row-1][0].equals(data[n_row-2][0])) //nei cambi pagina a volte il numero sim si ripete
+                        n_row--;
+                    
                     // M2M
                     if (data[n_row-1][1].equals(id102)){    
                         line = in.nextLine();
@@ -161,72 +162,83 @@ public class Scansionatore {
                         riga.next(); riga.next(); riga.next();
                         String Importo = riga.next();
                         data[n_row-1][2]=GB;
-                        data[n_row-1][3]=Importo;
+                        data[n_row-1][3]=Importo.replace(".","").replace(",",".");  //il primo elimina i punti, il secondo converte le virgole in punti
                         
                         line = in.nextLine(); // Totale
                         riga = new Scanner(line);
                         riga.next();
-                        data[n_row-1][7]=riga.next();
+                        data[n_row-1][8]=riga.next().replace(".","").replace(",",".");
                     
                         System.out.println( " GB -> "+GB+
-                                            " Importo x bundle-> "+Importo+
-                                            " Totale -> "+data[n_row-1][7]);
+                                            " Importo x bundle-> "+data[n_row-1][3]+
+                                            " Totale -> "+data[n_row-1][8]);
+                        System.out.println( " ***************");
                         
                     // Abb    
                     } else if (data[n_row-1][1].equals(id103)){
                         line = in.nextLine();
                         outputStream.println("id101 Abb "+line);
-                        Scanner riga = new Scanner(line);
-                        String check=riga.next();
                         
-                        while (check.equals(id105) || 
-                               check.equals(id108) ||
-                               check.equals(id109)){
+                        while (line.contains(id105) || //Intercet-Tassa-Totale traffico
+                               line.contains(id108) ||
+                               line.contains(id109)){
                             
-                            if (check.equals(id105)){           // "intercent"
-                                riga.next();
+                            Scanner riga = new Scanner(line);
+                            //String check=riga.next();
+                            
+                            if (line.contains(id105)){           // "intercent"
+                                riga.next();riga.next();
                                 data[n_row-1][2]=riga.next();   // GB
                                 riga.next();riga.next();riga.next();
-                                data[n_row-1][3]=riga.next();   //importo
-                                System.out.println("Abb  GB "+data[n_row-1][2]+" Importo "+data[n_row-1][3]);
+                                data[n_row-1][3]=riga.next().replace(".","").replace(",",".");   //importo
+                                //System.out.println("Abb  GB "+data[n_row-1][2]+" Importo "+data[n_row-1][3]);
  
-                            } else if (check.equals(id108)){    // "tassa"
+                            } else if (line.contains(id108)){    // "tassa"
                                 riga.next();riga.next();riga.next();
+                                riga.next();riga.next();riga.next();
+                                riga.next();riga.next();riga.next();
+                                data[n_row-1][6]=riga.next().replace(".","").replace(",",".");   
+                                //System.out.println("Abb  TCG "+data[n_row-1][6]);                                   
+                                
+                            } else if (line.contains(id109)){    // "Totale traffico"
                                 riga.next();riga.next();riga.next();
                                 riga.next();riga.next();
-                                data[n_row-1][5]=riga.next();   // GB
-                                System.out.println("Abb  TCG "+data[n_row-1][5]);                                   
-                                
-                            } else if (check.equals(id109)){    // "Totale"
-                                if (riga.next().equals(id110)){
-                                    riga.next();riga.next();riga.next();
-                                    data[n_row-1][6]=riga.next();                               
-                                    System.out.println("Abb  Totale "+data[n_row-1][6]);
-                                    
-                                } else {
-                                    break;
-                                }       
+                                data[n_row-1][7]=riga.next().replace(".","").replace(",",".");                               
+                                //System.out.println("Abb  Totale traffico "+data[n_row-1][7]);
                             } else {
                                 System.out.println("Errore in sottosezione Abb - Nessun match");
                                 break;
                             }
+                            
                         line = in.nextLine();
-                        riga = new Scanner(line);
-                        check=riga.next();
-                        //System.out.println("+++"+line);
-                        }
                         
-                        //System.out.println("Fine record abb");
+                        }
+                    
+                        if (line.contains(id110)){ //Totale
+                            Scanner riga = new Scanner(line);
+                            riga.next();
+                            data[n_row-1][8]=riga.next().replace(".","").replace(",",".");
+                        }
+                            
+                            
+                        System.out.println( " GB -> "+data[n_row-1][2]+
+                                            " Importo x bundle -> "+data[n_row-1][3]+
+                                            " TCG -> "+data[n_row-1][6]+
+                                            " Totale importo traffico -> "+data[n_row-1][7]+
+                                            " Totale -> "+data[n_row-1][8]);
+                        System.out.println( " 0000000000000000000000000000");                    
+                            
+
                         
                     // ric    
-                    } else if (data[n_row-1][1].equals(id104)){
+                    } else if (data[n_row-1][1].equals(id104)){ //ric
                         line = in.nextLine();
-                        outputStream.println("id101 Ric "+line);
-                        Scanner riga = new Scanner(line);
-                        while (riga.next().equals(id105)){  //intercent
-                            riga.next();
+                        outputStream.println("id101 Ric "+line);                     
+                        while (line.contains(id105)){  //intercent
+                            Scanner riga = new Scanner(line);
+                            riga.next();riga.next();
                             String check=riga.next();
-                            if (check.equals(id104)){
+                            if (check.equals(id104)){ //ric -> Intercent 2014 ric, contributo ricaricabile sempre a 0
                                 riga.next(); riga.next(); riga.next(); riga.next();
                                 String Importo = riga.next();
                                 //data[n_row-1][3]=Importo;
@@ -236,28 +248,24 @@ public class Scansionatore {
                                 riga.next(); riga.next(); riga.next(); riga.next(); riga.next();
                                 String Importo = riga.next();
                                 data[n_row-1][2]=GB;
-                                data[n_row-1][3]=Importo;
-                                //System.out.println("ric  GB "+GB+" Importo "+Importo);
-                                
+                                data[n_row-1][3]=Importo.replace(".","").replace(",",".");  
                             }
+                            
                         line = in.nextLine();
-                        riga = new Scanner(line);
-                                                 
+                        
                         }
-                        if (riga.equals(id106)){ //ricariche
+                        if (line.contains(id106)){ //ricariche
+                            Scanner riga = new Scanner(line);
                             riga.next(); 
                             data[n_row-1][4]=riga.next();   //qta 
-                            data[n_row-1][5]=riga.next();   //importo
-                            //System.out.println("ric N ricariche "+data[n_row-1][4]+" Importo "+data[n_row-1][3]);
-                            
+                            data[n_row-1][5]=riga.next().replace(".","").replace(",",".");   //importo
                             line = in.nextLine();
-                            riga = new Scanner(line);
                         }
-                        System.out.println(riga.next());
-                        if (riga.equals(id109)){ //Totale
-                            data[n_row-1][7]=riga.next();
-                            System.out.println("ciao");
-                            
+                        
+                        if (line.contains(id109)){ //Totale
+                            Scanner riga = new Scanner(line);
+                            riga.next();
+                            data[n_row-1][7]=riga.next().replace(".","").replace(",",".");
                         }
                         
                         System.out.println( " GB -> "+data[n_row-1][2]+
@@ -265,6 +273,7 @@ public class Scansionatore {
                                             " ricariche -> "+data[n_row-1][4]+
                                             " Importo ricariche -> "+data[n_row-1][5]+
                                             " Totale -> "+data[n_row-1][7]);
+                        System.out.println( " -----------------------");
                         
                                               
                     } else {
@@ -283,7 +292,7 @@ public class Scansionatore {
             line = in.nextLine();
                 
             }
-            
+        //outputStream.println(Arrays.deepToString(data)); esplode l'array
         outputStream.close();        
         inputStream.close();
         
@@ -311,8 +320,6 @@ public class Scansionatore {
     data[0][16]=id16;
     data[0][17]=id17;
     data[0][18]=id18;
-
-
 
     return data;
 
