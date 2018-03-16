@@ -285,7 +285,6 @@ public class Mysql {
     }
     
     
-    
     public Connection con = null;
     public Statement st = null;
     public PreparedStatement pst = null;

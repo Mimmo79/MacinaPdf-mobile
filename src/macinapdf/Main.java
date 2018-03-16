@@ -83,7 +83,7 @@ public class Main {
         getParameters();                                                    //carico i parametri     
         MacinaPdf.macina(nomeFile);                                         //converto il file in .txt
         String data[][] = Scansionatore.scansiona(nomeFile);                //elaboro il .txt ed estraggo i dati in un array
-        //Mysql.caricaFattureSuDMBS(data);
+        Mysql.caricaFattureSuDMBS(data);
         //Mysql.completaArrayConQuery(data);
         //Excel.compilaExcel(data);                                           //passo l'array ad un metodo per la scrittura su un file excel           
         //ManipolaFile.eliminaFile(nomeFile+".txt");                          //elimino i file di appoggio
