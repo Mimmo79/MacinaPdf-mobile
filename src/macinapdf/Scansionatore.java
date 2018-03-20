@@ -42,7 +42,8 @@ public class Scansionatore {
     static String id17="Sede";
     static String id18="Note";
   
-    public static String id20="Fattura periodo:";
+    //public static String id20="Fattura periodo:"; //1° bim 2018
+    public static String id20="Fattura bimestrale"; //5° bim 2017
     static String id100="RIEPILOGO PER UTENZA";
     static String id101="Importo";
     static String id102="M2M";
@@ -54,7 +55,8 @@ public class Scansionatore {
     static String id108="Tassa";
     static String id109="Totale traffico";
     static String id110="Totale";
-    static String id111="Fax e Dati"; 
+    static String id111="Fax e Dati";
+    static String id112="Ricaricabile Business";
 
 
     
@@ -104,7 +106,7 @@ public class Scansionatore {
                 if (line.contains(id100))
                     break;
             }
-       
+            System.out.println( bim+" "+anno+" "+nFatt);
         
             // scansiono la parte in cui compaiono i report fattura
             while (in.hasNextLine()) {
@@ -126,13 +128,16 @@ public class Scansionatore {
                     data[n_row][0]=Num;
                     
                     //M2M - ric - abb
-                    String tipo = riga.next();
-                    if (tipo.equals(id102)){        //M2M
+
+                    if (line.contains(id102)){        //M2M                        
                         data[n_row][1]=id102;                        
-                        System.out.println(Num+" "+tipo);                        
-                    } else if (tipo.equals(id105)){ //Intercent
-                        riga.next();
+                        System.out.println(Num+" "+data[n_row][1]);                        
+                    } else if (line.contains(id105)){ //Intercent
+                        riga.next(); riga.next();
                         data[n_row][1]=riga.next(); //ric/abb
+                        System.out.println(Num+" "+data[n_row][1]);
+                    } else if (line.contains(id112)){ //Ricaricabile Business
+                        data[n_row][1]=id112;
                         System.out.println(Num+" "+data[n_row][1]);
                     } 
                     
@@ -142,7 +147,8 @@ public class Scansionatore {
                 // dati fattura
                 data[n_row][9] = bim;
                 data[n_row][10] = anno;
-                data[n_row][11] = nFatt;               
+                data[n_row][11] = nFatt;
+                
 
                     
                 n_row++;                //contatore linee array
@@ -262,13 +268,13 @@ public class Scansionatore {
                         }
                         if (line.contains(id106)){ //ricariche
                             Scanner riga = new Scanner(line);
-                            riga.next(); 
+                            riga.next(); riga.next(); riga.next();
                             data[n_row-1][4]=riga.next().replace(".","").replace(",",".");   //qta 
                             data[n_row-1][5]=riga.next().replace(".","").replace(",",".");   //importo
                             line = in.nextLine();
                         }
                         
-                        if (line.contains(id109)){ //Totale
+                        if (line.contains(id110)){ //Totale
                             Scanner riga = new Scanner(line);
                             riga.next();
                             data[n_row-1][7]=riga.next().replace(".","").replace(",",".");
@@ -298,7 +304,7 @@ public class Scansionatore {
             line = in.nextLine();
                 
             }
-        //outputStream.println(Arrays.deepToString(data)); esplode l'array
+        outputStream.println(Arrays.deepToString(data)); //esplode l'array
         outputStream.close();        
         inputStream.close();
         
