@@ -9,7 +9,7 @@ package macinapdf;
 import java.io.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-import java.util.Arrays;
+//import java.util.Arrays;
 
 /**
  *
@@ -42,8 +42,8 @@ public class Scansionatore {
     static String id17="Sede";
     static String id18="Note";
   
-    //public static String id20="Fattura periodo:"; //1° bim 2018
-    public static String id20="Fattura bimestrale"; //5° bim 2017
+    public static String id20="Fattura periodo:"; //1° bim 2018
+    public static String id20bis="Fattura bimestrale"; //5° bim 2017
     static String id100="RIEPILOGO PER UTENZA";
     static String id101="Importo";
     static String id102="M2M";
@@ -62,7 +62,7 @@ public class Scansionatore {
 
 
     
-    static int n_row=1;  // nella prima riga ci sono le intestazioni
+    static int n_row=1;  //contatore array "data - nella prima riga ci sono le intestazioni
     static String[][] data = new String[Main.nRigheArrayData][Main.nColonneArrayData];
 
     
@@ -89,7 +89,7 @@ public class Scansionatore {
             //cerco i dati di intestazione
             while (in.hasNextLine()) {
                 line = in.nextLine();
-                if (line.contains(id20)){
+                if (line.contains(id20) || line.contains(id20bis)){
                     line = in.nextLine();
                     Scanner riga = new Scanner(line);
                     bim = riga.next().substring(0, 1);      //bimestre
@@ -131,7 +131,7 @@ public class Scansionatore {
                     for (i=0; i<20; i++){
                         data[n_row][i]="0";
                     }                    
-                    // numero linea
+                    //numero linea
                     Scanner riga = new Scanner(line);
                     riga.next(); 
                     String Num = riga.next();
@@ -169,7 +169,7 @@ public class Scansionatore {
                     if (data[n_row-1][0].equals(data[n_row-2][0])) //nei cambi pagina a volte il numero sim si ripete
                         n_row--;
                     
-                    // M2M
+                    // ---M2M---
                     if (data[n_row-1][1].equals(id102)){    
                         line = in.nextLine();
                         outputStream.println("id101 M2M "+line);
@@ -206,7 +206,7 @@ public class Scansionatore {
                                             " Totale -> "+data[n_row-1][8]);
                         System.out.println( " ***************");
                         
-                    // Abb    
+                    // ---Abb---    
                     } else if (data[n_row-1][1].equals(id103)){
                         line = in.nextLine();
                         outputStream.println("id101 Abb "+line);
@@ -259,7 +259,7 @@ public class Scansionatore {
                             
 
                         
-                    // ric    
+                    // ---ric---    
                     } else if (data[n_row-1][1].equals(id104)){ //ric
                         line = in.nextLine();
                         outputStream.println("id101 Ric "+line);
@@ -298,15 +298,14 @@ public class Scansionatore {
                                         line.contains(id108) || //"tassa"
                                         line.contains(id109) || //"Totale traffico"
                                         line.contains(id114)){  //"Filtro   
-                                System.out.println("inerte "+line);
-                                
+                                System.out.println("nessuna azione "+line);                            
                             } else if (line.contains(id106)){   //ricariche
                                 Scanner riga = new Scanner(line);
                                 riga.next(); riga.next(); riga.next();
                                 data[n_row-1][4]=riga.next().replace(".","").replace(",",".");   //qta 
                                 data[n_row-1][5]=riga.next().replace(".","").replace(",",".");   //importo
                             } else {                            //nessun match
-                                System.out.println("sezione ricaricabile - nessun match con "+id105+" "+id106+" "+id113);
+                                System.out.println("sezione ricaricabile - nessun match con "+id105+" "+id106+" "+id113+" "+id108+" "+id109+" "+id114);
                             }
                             
                             line = in.nextLine();
@@ -327,7 +326,7 @@ public class Scansionatore {
 
                         
                         
-                    // nessun match    
+                    // ---nessun match---    
                     } else {
                         
                         System.out.println("Errore Scansionatore - tipo non M2M/ric/abb");
@@ -344,7 +343,7 @@ public class Scansionatore {
             line = in.nextLine();
                 
             }
-        outputStream.println(Arrays.deepToString(data)); //esplode l'array
+        //outputStream.println(Arrays.deepToString(data)); //esplode l'array
         outputStream.close();        
         inputStream.close();
         
