@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class Main {
 
-    static String fileParam="C:\\Users\\senma\\Documents\\NetBeansProjects\\MacinaPdf-mobile\\src\\macinapdf\\parametri";//C:\\Users\\Massi\\XAMPP\\htdocs\\MacinaPdf\\src\\macinapdf---C:\\Users\\senma\\Documents\\NetBeansProjects\\MacinaPdf\\src\\macinapdf
+    static String fileParam="C:\\Users\\massi\\Desktop\\MacinaPdf-mobile\\src\\macinapdf\\parametri";//C:\\Users\\Massi\\XAMPP\\htdocs\\MacinaPdf\\src\\macinapdf---C:\\Users\\senma\\Documents\\NetBeansProjects\\MacinaPdf\\src\\macinapdf
    
     public static String nomeFile;
     public static String dbUrl;
