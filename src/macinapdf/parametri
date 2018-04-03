@@ -1,11 +1,11 @@
 CONNETTIVITA' DB
 --------------------------
-dbUrl   =   jdbc:mysql://192.168.178.31:3306/
-dbUser  =   root
-dbPwd   =   root
+dbUrl   =   jdbc:mysql://lnx023:3306
+dbUser  =   telefonia   
+dbPwd   =   telefonia
 
-jdbc:mysql://lnx023:3306 
-jdbc:mysql://localhost:3306
+jdbc:mysql://lnx023:3306    root        root
+jdbc:mysql://localhost:3306 telefonia   telefonia 
 
 
 
@@ -13,17 +13,20 @@ OPERAZIONI SU DB
 --------------------------
 dbName              =   telefonia
 tab_linee           =   fisso_linee
-tab_fatture         =   mobile_fatturazioni
 nome_campo_linea    =   NLinea
+
+mobile
+------
+tab_fatture         =   mobile_fatturazioni
+
 
 
 
 FILE DA ELABORARE
 ------------------
-nomeFile    =   C:\\Users\\massi\\Desktop\\File Telecom\\mobile\\2_2018_TINBS_2018_C20_7X00476753
+nomeFile    =   C:\\Users\\senma\\Desktop\\File Telecom\\mobile\\2_2018_TINBS_2018_C20_7X00476753
 
 C:\Users\\massi\\Desktop\\File Telecom\\mobile\
-
 C:\\Users\\senma\\Desktop\\File Telecom\\mobile\\1_2018_TINBS_2018_C10_7X05236423
 C:\\Users\\senma\\Desktop\\File Telecom\\mobile\\5_2017_TINBS_2017_C50_7X03486763
 
