@@ -60,6 +60,7 @@ public class Scansionatore {
     static String id113="Blocco";
     static String id114="Filtro";
     static String id115="Intercent";
+    static String id116="Servizio Twin";
 
     
     static int n_row=1;  //contatore array "data - nella prima riga ci sono le intestazioni
@@ -172,7 +173,7 @@ public class Scansionatore {
                     // ---M2M---
                     if (data[n_row-1][1].equals(id102)){    
                         line = in.nextLine();
-                        outputStream.println("id101 M2M "+line);                        boolean c=true; // non considero la doppia voce intercent per il bundle da 1GB internazionale
+                        outputStream.println("id101 M2M "+line);                        
                         while ( line.contains(id115) ||
                                 line.contains(id111) ||
                                 line.contains(id109) ||
@@ -181,7 +182,6 @@ public class Scansionatore {
                             Scanner riga = new Scanner(line);
                             
                             if (line.contains(id105)){ //intercent 2014
-                                c=false;
                                 riga.next(); riga.next();
                                 String GB = riga.next();
                                 riga.next(); riga.next(); riga.next();
@@ -214,14 +214,15 @@ public class Scansionatore {
                         line = in.nextLine();
                         outputStream.println("id101 Abb "+line);
                        
-                        while (line.contains(id115) || //Intercet-Tassa-Totale traffico
+                        while (line.contains(id115) || //Intercet-Tassa-Totale traffico-Blocco-Servizio Twin
                                line.contains(id108) ||
                                line.contains(id109) ||
-                               line.contains(id113)){
+                               line.contains(id113) ||
+                               line.contains(id116)){
                             
                             Scanner riga = new Scanner(line);
                             
-                            if (line.contains(id115)){           // "intercent 2014"
+                            if (line.contains(id105)){           // "intercent 2014"
                                 riga.next();riga.next();
                                 data[n_row-1][2]=riga.next();   // GB
                                 riga.next();riga.next();riga.next();
