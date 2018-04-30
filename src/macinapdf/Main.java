@@ -89,8 +89,11 @@ public class Main {
         String data[][] = Scansionatore.scansiona(nomeFile);                //elaboro il .txt ed estraggo i dati in un array
         Mysql.caricaFattureSuDMBS(data);
         //Mysql.completaArrayConQuery(data);
-        //Excel.compilaExcel(data);                                           //passo l'array ad un metodo per la scrittura su un file excel           
+        //Excel.compilaExcel(data);                                         //passo l'array ad un metodo per la scrittura su un file excel           
         ManipolaFile.eliminaFile(nomeFile+".txt");                          //elimino i file di appoggio
         ManipolaFile.eliminaFile(nomeFile+"-elab1.txt");
+        
+        
+        
     } 
 }
