@@ -194,7 +194,7 @@ public class Scansionatore {
                                 riga.next();riga.next();
                                 data[n_row-1][7]=riga.next().replace(".","").replace(",",".");                                 
                             } else if (line.contains(id111) || line.contains(id113) || line.contains(id115) ){//"Fax e Dati" o "Blocco" o "Intercent
-                                System.out.println("nessuna azione - "+line);
+                                System.out.println("nessuna azione per riga -> "+line);
                             }
                             line = in.nextLine();
                         }
@@ -208,6 +208,7 @@ public class Scansionatore {
                                             " Totale importo traffico -> "+data[n_row-1][7]+
                                             " Totale -> "+data[n_row-1][8]);
                         System.out.println( " ***************");
+                        System.out.println( " ");
                         
                     // ---Abb---    
                     } else if (data[n_row-1][1].equals(id103)){
@@ -242,7 +243,7 @@ public class Scansionatore {
                                 System.out.println("totale traffico "+data[n_row-1][7]);
                                 
                             } else {
-                                System.out.println("nessuna azione - "+line);
+                                System.out.println("nessuna azione per linea -> "+line);
                             }
                         
                         line = in.nextLine();
@@ -262,7 +263,8 @@ public class Scansionatore {
                                             " TCG -> "+data[n_row-1][6]+
                                             " Totale importo traffico -> "+data[n_row-1][7]+
                                             " Totale -> "+data[n_row-1][8]);
-                        System.out.println( " 0000000000000000000000000000");                    
+                        System.out.println( " ***************");
+                        System.out.println( " ");                   
                             
 
                         
@@ -306,14 +308,15 @@ public class Scansionatore {
                                         line.contains(id108) || //"tassa"
                                         line.contains(id109) || //"Totale traffico"
                                         line.contains(id114)){  //"Filtro   
-                                System.out.println("nessuna azione "+line);                            
+                                System.out.println("nessuna azione per linea -> "+line);                            
                             } else if (line.contains(id106)){   //ricariche
                                 Scanner riga = new Scanner(line);
                                 riga.next(); riga.next(); riga.next();
                                 data[n_row-1][4]=riga.next().replace(".","").replace(",",".");   //qta 
                                 data[n_row-1][5]=riga.next().replace(".","").replace(",",".");   //importo
                             } else {                            //nessun match
-                                System.out.println("sezione ricaricabile - nessun match con "+id105+" "+id106+" "+id113+" "+id108+" "+id109+" "+id114);
+                                System.out.println(line);
+                                System.out.println("Errore sezione ricaricabile - nessun match con *"+id105+"* *"+id106+"* *"+id113+"* *"+id108+"* *"+id109+"* *"+id114);
                             }
                             
                             line = in.nextLine();
@@ -330,14 +333,15 @@ public class Scansionatore {
                                             " ricariche -> "+data[n_row-1][4]+
                                             " Importo ricariche -> "+data[n_row-1][5]+
                                             " Totale -> "+data[n_row-1][8]);
-                        System.out.println( " -----------------------");     
+                        System.out.println( " ***************");
+                        System.out.println( " ");    
 
                         
                         
                     // ---nessun match---    
                     } else {
                         
-                        System.out.println("Errore Scansionatore - tipo non M2M/ric/abb");
+                        System.out.println("Errore Scansionatore - tipo diverso da M2M/ric/abb");
                       
                     }
                 
