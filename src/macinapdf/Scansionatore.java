@@ -61,6 +61,7 @@ public class Scansionatore {
     static String id114="Filtro";
     static String id115="Intercent";
     static String id116="Servizio Twin";
+    static String id117="Intercent 1 GB";
 
     
     static int n_row=1;  //contatore array "data - nella prima riga ci sono le intestazioni
@@ -202,12 +203,12 @@ public class Scansionatore {
                         Scanner riga = new Scanner(line);   // Totale
                         riga.next();
                         data[n_row-1][8]=riga.next().replace(".","").replace(",",".");
-                    
-                        System.out.println( " GB -> "+data[n_row-1][2]+
-                                            " Importo x bundle-> "+data[n_row-1][3]+
-                                            " Totale importo traffico -> "+data[n_row-1][7]+
-                                            " Totale -> "+data[n_row-1][8]);
-                        System.out.println( " ***************");
+                        
+                        System.out.println( "*** Valori estrapolati ***");
+                        System.out.println( "GB -> "+data[n_row-1][2]+
+                                            " || Importo x bundle-> "+data[n_row-1][3]+
+                                            " || Totale importo traffico -> "+data[n_row-1][7]+
+                                            " || Totale -> "+data[n_row-1][8]);
                         System.out.println( " ");
                         
                     // ---Abb---    
@@ -257,13 +258,12 @@ public class Scansionatore {
                             System.out.println("totale "+data[n_row-1][8]);
                         }
                             
-                            
+                        System.out.println( "*** Valori estrapolati ***");    
                         System.out.println( " GB -> "+data[n_row-1][2]+
                                             " Importo x bundle -> "+data[n_row-1][3]+
                                             " TCG -> "+data[n_row-1][6]+
                                             " Totale importo traffico -> "+data[n_row-1][7]+
                                             " Totale -> "+data[n_row-1][8]);
-                        System.out.println( " ***************");
                         System.out.println( " ");                   
                             
 
@@ -304,7 +304,8 @@ public class Scansionatore {
                                         }
                                     }
 
-                            } else if ( line.contains(id113) || //"Blocco"
+                            } else if ( line.contains(id117) || //"Intercent 1 GB"
+                                        line.contains(id113) || //"Blocco"
                                         line.contains(id108) || //"tassa"
                                         line.contains(id109) || //"Totale traffico"
                                         line.contains(id114)){  //"Filtro   
@@ -327,13 +328,12 @@ public class Scansionatore {
                             riga.next();
                             data[n_row-1][8]=riga.next().replace(".","").replace(",",".");                           
                         }
-                        
-                        System.out.println( " GB -> "+data[n_row-1][2]+
-                                            " Importo x bundle -> "+data[n_row-1][3]+
-                                            " ricariche -> "+data[n_row-1][4]+
-                                            " Importo ricariche -> "+data[n_row-1][5]+
-                                            " Totale -> "+data[n_row-1][8]);
-                        System.out.println( " ***************");
+                        System.out.println( "*** Valori estrapolati ***");
+                        System.out.println( "GB : "+data[n_row-1][2]+
+                                            " || Importo x bundle : "+data[n_row-1][3]+
+                                            " || ricariche : "+data[n_row-1][4]+
+                                            " || Importo ricariche : "+data[n_row-1][5]+
+                                            " || Totale : "+data[n_row-1][8]);
                         System.out.println( " ");    
 
                         
