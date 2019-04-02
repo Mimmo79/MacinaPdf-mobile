@@ -9,7 +9,7 @@ package macinapdf;
 import java.io.*;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-//import java.util.Arrays;
+import java.util.Arrays;
 
 /**
  *
@@ -193,16 +193,25 @@ public class Scansionatore {
                             } else if (line.contains(id109)){    // "Totale traffico"
                                 riga.next();riga.next();riga.next();
                                 riga.next();riga.next();
-                                data[n_row-1][7]=riga.next().replace(".","").replace(",",".");                                 
+                                String TotaleTraffico=riga.next().replace(".","").replace(",",".");
+                                data[n_row-1][7]=TotaleTraffico;                                
                             } else if (line.contains(id111) || line.contains(id113) || line.contains(id115) ){//"Fax e Dati" o "Blocco" o "Intercent
                                 System.out.println("nessuna azione per riga -> "+line);
                             }
                             line = in.nextLine();
                         }
                         
-                        Scanner riga = new Scanner(line);   // Totale
+                        // evitare blocco su cambio pagina dovuto a simboli prima della riga totale
+                        // vedi 2°bim 2019 sim 3387844418
+                        while ( !line.contains(id110)){ // "Totale"
+                            line = in.nextLine();
+                        }
+                        
+                        Scanner riga = new Scanner(line);
+                        System.out.println(line);
                         riga.next();
-                        data[n_row-1][8]=riga.next().replace(".","").replace(",",".");
+                        String Totale=riga.next().replace(".","").replace(",",".");
+                        data[n_row-1][8]=Totale;
                         
                         System.out.println( "*** Valori estrapolati ***");
                         System.out.println( "GB -> "+data[n_row-1][2]+
@@ -355,7 +364,7 @@ public class Scansionatore {
             line = in.nextLine();
                 
             }
-        //outputStream.println(Arrays.deepToString(data)); //esplode l'array
+        // outputStream.println(Arrays.deepToString(data)); //esplode l'array
         outputStream.close();        
         inputStream.close();
         

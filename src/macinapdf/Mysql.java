@@ -240,6 +240,23 @@ public class Mysql {
             pst = con.prepareStatement(query);
             
             for (riga=1; riga < (Scansionatore.n_row) ; riga++){
+                
+                // x verifica in caso di anomalia dati caricati nel database
+                /* 
+                System.out.println( data[riga][0]+" "+
+                    data[riga][1]+" "+
+                    data[riga][2]+" "+
+                    data[riga][3]+" "+
+                    data[riga][4]+" "+
+                    data[riga][5]+" "+
+                    data[riga][6]+" "+
+                    data[riga][7]+" "+
+                    data[riga][8]+" "+
+                    data[riga][9]+" "+
+                    data[riga][10]+" "+
+                    data[riga][11]);
+                */
+
                 pst.setString(1, data[riga][0]);
                 pst.setString(2, data[riga][1]);
                 pst.setString(3, data[riga][2]);

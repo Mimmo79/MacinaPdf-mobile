@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author SenMa
@@ -20,9 +21,9 @@ import java.util.logging.Logger;
 public class Main {
 
     static String fileParam="C:\\Users\\senma\\Documents\\NetBeansProjects\\MacinaPdf-mobile\\src\\macinapdf\\parametri";
-    //C:\\Users\\Massi\\XAMPP\\htdocs\\MacinaPdf\\src\\macinapdf
-    //C:\Users\senma\Documents\NetBeansProjects\MacinaPdf-mobile\src\macinapdf
-    //C:\\Users\\massi\\Desktop\\MacinaPdf-mobile\\src\\macinapdf\\parametri
+    //C:\\Users\\Massi\\XAMPP\\htdocs\\Pdf_to_txt\\src\\macinapdf
+    //C:\Users\senma\Documents\NetBeansProjects\Pdf_to_txt-mobile\src\macinapdf
+    //C:\\Users\\massi\\Desktop\\Pdf_to_txt-mobile\\src\\macinapdf\\parametri
     
     
     public static String nomeFile;
@@ -48,12 +49,12 @@ public class Main {
 
         } catch (FileNotFoundException ex) {
 
-            Logger lgr = Logger.getLogger(MacinaPdf.class.getName());
+            Logger lgr = Logger.getLogger(Pdf_to_txt.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
         } catch (IOException ex) {
 
-            Logger lgr = Logger.getLogger(MacinaPdf.class.getName());
+            Logger lgr = Logger.getLogger(Pdf_to_txt.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
         } finally {
@@ -63,7 +64,7 @@ public class Main {
                      in.close();
                  }
             } catch (IOException ex) {
-                Logger lgr = Logger.getLogger(MacinaPdf.class.getName());
+                Logger lgr = Logger.getLogger(Pdf_to_txt.class.getName());
                 lgr.log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
@@ -85,7 +86,7 @@ public class Main {
     
     public static void main(String[] args) throws Exception {
         getParameters();                                                    //carico i parametri     
-        MacinaPdf.macina(nomeFile);                                         //converto il file in .txt
+        Pdf_to_txt.macina(nomeFile);                                         //converto il file in .txt
         String data[][] = Scansionatore.scansiona(nomeFile);                //elaboro il .txt ed estraggo i dati in un array
         Mysql.caricaFattureSuDMBS(data);
         //Mysql.completaArrayConQuery(data);

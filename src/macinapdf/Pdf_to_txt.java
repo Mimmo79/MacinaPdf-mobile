@@ -19,10 +19,10 @@ import javax.swing.JOptionPane;
  * @author SenMa
  */
 
-public class MacinaPdf {
+public class Pdf_to_txt {
 
     /**
-     * Questo metodo trasforma il documento .pdf in un file pdf contenente 
+     * Questo metodo trasforma il documento .pdf in un file contenente 
      * tutto il testo del file originale senza formattazione
      * 
      * @param nomeFile è il nome del file .pdf da elaborare
