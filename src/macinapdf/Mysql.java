@@ -170,7 +170,7 @@ public class Mysql {
 
         oggettoMysql.executeQueryRecuperaMulti(queryTemp, 9);           
         
-        for (riga=1; riga < (Scansionatore.n_row) ; riga++){
+        for (riga=1; riga < (Scansionatore_2018.n_row) ; riga++){
             //System.out.println(Num);
             Num=data[riga][0];
             for (i=0; i<Main.nRigheArrayData; i++){
@@ -239,10 +239,10 @@ public class Mysql {
                 " VALUES (      ?,      ?,      ?,      ?,          ?,              ?,                  ?,      ?,              ?,      ?,      ?,      ?)";         
             pst = con.prepareStatement(query);
             
-            for (riga=1; riga < (Scansionatore.n_row) ; riga++){
+            for (riga=1; riga < (Scansionatore_2019_11_12.n_row) ; riga++){
                 
                 // x verifica in caso di anomalia dati caricati nel database
-                /* 
+                 
                 System.out.println( data[riga][0]+" "+
                     data[riga][1]+" "+
                     data[riga][2]+" "+
@@ -255,7 +255,7 @@ public class Mysql {
                     data[riga][9]+" "+
                     data[riga][10]+" "+
                     data[riga][11]);
-                */
+                
 
                 pst.setString(1, data[riga][0]);
                 pst.setString(2, data[riga][1]);

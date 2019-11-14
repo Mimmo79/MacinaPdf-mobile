@@ -87,7 +87,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         getParameters();                                                    //carico i parametri     
         Pdf_to_txt.macina(nomeFile);                                         //converto il file in .txt
-        String data[][] = Scansionatore.scansiona(nomeFile);                //elaboro il .txt ed estraggo i dati in un array
+        String data[][] = Scansionatore_2019_11_12.scansiona(nomeFile);                //elaboro il .txt ed estraggo i dati in un array
+        //String data[][] = Scansionatore_2014.scansiona(nomeFile);
         Mysql.caricaFattureSuDMBS(data);
         //Mysql.completaArrayConQuery(data);
         //Excel.compilaExcel(data);                                         //passo l'array ad un metodo per la scrittura su un file excel           

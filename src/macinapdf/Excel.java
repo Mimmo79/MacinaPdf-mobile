@@ -79,7 +79,7 @@ public class Excel {
                 csErrore.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                 
                 
-                for (rownum = (short) 0; rownum < (Scansionatore.n_row) ; rownum++) { 
+                for (rownum = (short) 0; rownum < (Scansionatore_2018.n_row) ; rownum++) { 
 
                     XSSFRow r = sheet1.createRow(rownum);               // creo una riga
                     
