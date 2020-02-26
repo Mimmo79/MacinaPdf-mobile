@@ -72,7 +72,8 @@ public class Scansionatore_2019_11_12 {
     static String id125="Totale Tassa Concessione Governativa";
     static String id126="Prospetto Informativo";
     static String id127="Ricarica credito 48";
-    static String id128="INTERCENT 2018";
+    static String id128="2018";
+    static String id129="Intercent 2018";
 
     
     static int n_row=1;  //contatore array "data - nella prima riga ci sono le intestazioni
@@ -111,6 +112,7 @@ public class Scansionatore_2019_11_12 {
                     riga = new Scanner(line);
                     riga.next();riga.next();
                     nFatt = riga.next();                    //n. fattura
+                    riga.close();
                 break;
                 }
             }
@@ -150,6 +152,7 @@ public class Scansionatore_2019_11_12 {
                     riga.next(); 
                     String Num = riga.next();
                     data[n_row][0]=Num;
+                    riga.close();
                     
                     //sulla stessa linea estraggo il tipo 
                     //M2M - ric - abb
@@ -215,6 +218,8 @@ public class Scansionatore_2019_11_12 {
                         System.out.println("------------------------");
                     }
                     
+                    riga.close();
+                    
                 // Se stiamo lavorando con abb
                 // ****************************
                 } else if (data[n_row-1][1].equals(id103)){ //abb   
@@ -260,6 +265,8 @@ public class Scansionatore_2019_11_12 {
                         System.out.println("Totale ="+Totale);
                         System.out.println("------------------------");
                     }
+                
+                    riga.close();    
                  
                 // Se stiamo lavorando con ric
                 // ****************************    
@@ -268,7 +275,7 @@ public class Scansionatore_2019_11_12 {
                     outputStream.println("ric "+line); 
                     Scanner riga = new Scanner(line);
 
-                    if (line.contains(id128)&&line.contains("GB")){ //"INTERCENT 2018" e "GB" x rilevare GB e relativo costo
+                    if (line.contains(id129)&&line.contains("GB")){ //"2018" e "GB" x rilevare GB e relativo costo
                         //System.out.println("ric intercent+GB "+line);
                         riga.next(); riga.next();
                         String GB = riga.next();
@@ -299,12 +306,16 @@ public class Scansionatore_2019_11_12 {
                             
                     
                     if (line.contains(id123)){ //"Linea " x rilevare totale 
-                        riga.next(); riga.next();
+                        //System.out.println(line);
+                        riga = new Scanner(line);
+                        riga.next(); riga.next(); 
                         String Totale = riga.next().replace("€","").replace(".","").replace(",",".");
                         data[n_row-1][8]=Totale;
                         System.out.println("Totale ="+Totale);
                         System.out.println("------------------------");
                     }
+                    
+                    riga.close();
                 
                 } 
                 
